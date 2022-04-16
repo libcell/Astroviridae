@@ -5,10 +5,7 @@ Version: 0.1.0
 Depends: 
     R (>= 3.5.0)
 Imports:
-    BiocManager, 
-    Biostrings,
-    msa, 
-    ggmsa
+    BiocManager
 Author: Bo Li (Chongqing Normal University)
 Maintainer: Bo Li <libcell@cqnu.edu.cn>
 Description: A R package to investigate genome sequences of Astroviridae
