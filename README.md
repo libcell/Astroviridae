@@ -13,7 +13,7 @@ Astroviridae is a R package used to investigate the sequences and evolution of d
 To install the Astroviridae, install from github using devtools
 
 ``` r
-library(Astroviridae)
+library(devtools)
 install_github("libcell/Astroviridae")
 ```
 
