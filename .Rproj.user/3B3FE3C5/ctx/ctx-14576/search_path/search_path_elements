@@ -1,0 +1,13 @@
+.GlobalEnv
+package:Astroviridae
+renv:shims
+tools:rstudio
+package:stats
+package:graphics
+package:grDevices
+package:datasets
+renv:shims
+package:utils
+package:methods
+Autoloads
+package:base
