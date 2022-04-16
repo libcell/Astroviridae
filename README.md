@@ -6,6 +6,8 @@ The project on analysis and research of Astroviridae
 
 Astroviridae is a R package used to investigate the sequences and evolution of diverse viruses from Astroviridae.
 
+<img src = "image/AsV_tree.png" width = "800" align = "middle">
+
 ## Installation
 
 To install the Astroviridae, install from github using devtools
