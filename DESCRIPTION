@@ -4,9 +4,22 @@ Title: Analyzing genome sequences via Astroviridae package
 Version: 0.1.0
 Depends: 
     R (>= 3.5.0)
+Imports:
+    BiocManager, 
+    Biostrings,
+    msa, 
+    ggmsa
 Author: Bo Li (Chongqing Normal University)
 Maintainer: Bo Li <libcell@cqnu.edu.cn>
 Description: A R package to investigate genome sequences of Astroviridae
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+biocViews:
+VignetteBuilder: knitr
+
