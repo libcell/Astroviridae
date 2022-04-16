@@ -1,10 +1,17 @@
 
 # Some useful keyboard shortcuts for package authoring:
+genome_sequences <- system.file("extdata", "AsVDB.rds",
+                                package = "Astroviridae")
+all.seq <- readRDS(genome_sequences)
 
-genome_sequences <- system.file("extdata", "sample.fasta", package = "ggmsa")
+seq.pick <- function() {
 
 
-hello <- function() {
-  print("Hello, world!")
+
+
 }
+
+
+
+
 
