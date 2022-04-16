@@ -4,7 +4,7 @@ Title: Analyzing genome sequences via Astroviridae package
 Version: 0.1.0
 Depends: 
     R (>= 3.5.0)
-Author: Chongqing Normal University
+Author: Bo Li (Chongqing Normal University)
 Maintainer: Bo Li <libcell@cqnu.edu.cn>
 Description: A R package to investigate genome sequences of Astroviridae
 License: What license is it under?
