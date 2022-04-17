@@ -2,7 +2,7 @@
 # Statistics information on Astroviridae.
 
 statistics <- function(seq.type = "all") {
-  stats <- readRDS("data/Statistics.rds")
+  # stats <- readRDS("data/Statistics.rds")
   if (seq.type == "all")
     content <- stats
   if (seq.type == "RefSeq")
