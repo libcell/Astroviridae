@@ -1,12 +1,12 @@
-\name{hello}
-\alias{hello}
+\name{seq_pick}
+\alias{seq_pick}
 \title{Hello, World!}
 \usage{
-hello()
+seq_pick()
 }
 \description{
 Prints 'Hello, world!'.
 }
 \examples{
-hello()
+seq_pick()
 }
