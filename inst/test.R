@@ -157,8 +157,8 @@ names(all.seq) <- stats$Identifier
 ### Pick sequences. 
 
 select.seq <- all.seq[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes"]
-select.anno <- stats[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes", ]
-rownames(select.anno) <- 1:nrow(select.anno)
+# select.anno <- stats[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes", ]
+# rownames(select.anno) <- 1:nrow(select.anno)
 
 library(msa)
 
@@ -191,6 +191,7 @@ export.fasta(DNA,
 
 library(adegenet)
 dna <- fasta2DNAbin(file = "aligned_genomes.fas")
+anno <- stats[match(rownames(dna), stats$Identifier), ]
 
 library(ape)
 D <- dist.dna(dna, model = "TN93")
@@ -219,29 +220,40 @@ title("NJ tree + bootstrap values")
 myPal <- colorRampPalette(c("red","yellow","green","blue"))
 
 tiplabels(frame = "none", pch = 20, cex = 3, 
-          col = transp(num2col(select.anno$Year, col.pal = myPal), 1.0), 
+          col = transp(num2col(anno$Year, col.pal = myPal), 1.0), 
           fg = "transparent")
 
 axisPhylo()
-temp <- pretty(1993:2008, 5)
+temp <- pretty(min(anno$Year):max(anno$Year), 10)
 legend("topright", 
-       # fill = transp(num2col(temp, col.pal = myPal), .7), 
-       fill = 1, 
-       # leg = temp, 
+       fill = transp(num2col(temp, col.pal = myPal), .7), 
+       leg = temp, 
        ncol = 2)
 
-nodelabels(myBoots, bg = NULL, cex = .6)
+nodelabels(myBoots, bg = NULL, frame = "none", col = "red", cex = .8)
+
 
 
 library(ggmsa)
 protein_sequences <- system.file("extdata", 
                                  "sample.fasta", 
                                  package = "ggmsa")
-ggmsa(protein_sequences, start = 221, end = 280, char_width = 0.5, seq_name = T) + geom_seqlogo() + geom_msaBar()
+ggmsa(protein_sequences, 
+      start = 221, 
+      end = 280, 
+      char_width = 0.5, 
+      seq_name = T) + 
+  geom_seqlogo() + 
+  geom_msaBar()
 
-all.fas <- msaConvert(align.seq, type = "ape::DNAbin")
+all.fas <- msaConvert(align.seq, 
+                      type = "ape::DNAbin")
 
-ggmsa(all.fas, start = 221, end = 280, char_width = 0.5, seq_name = T) + 
+ggmsa(all.fas, 
+      start = 221, 
+      end = 280, 
+      char_width = 0.5, 
+      seq_name = T) + 
   geom_seqlogo() + 
   geom_msaBar()
 
