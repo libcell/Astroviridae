@@ -47,6 +47,9 @@ hist(asv.len, breaks = 10,
 time.line <- stats$`Assembly Submission Date`
 time.line <- sapply(as.character(time.line), function(x) strsplit(x, "-")[[1]][1])
 time.line <- as.numeric(time.line)
+
+stats$Year <- time.line # added the year into the stats object. 
+
 tl.x <- seq(min(time.line), max(time.line), by = 1)
 tl.y <- rep(NA, times = length(tl.x))
 
@@ -148,9 +151,14 @@ file.copy("Astroviridae_genome.fas", "D:/00-GitHub/Astroviridae/inst/extdata/")
 # (8) Choose the viruses for constructing the dendrogram. 
 # Update the names of all viruses, i. e., the future labels of evolutionary tree. 
 
-names(all.seq) <- stats$`Organism Name`
+# names(all.seq) <- stats$`Organism Name`
+names(all.seq) <- stats$Identifier
+
+### Pick sequences. 
 
 select.seq <- all.seq[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes"]
+select.anno <- stats[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes", ]
+rownames(select.anno) <- 1:nrow(select.anno)
 
 library(msa)
 
@@ -205,14 +213,24 @@ myBoots <- boot.phylo(tre,
                       dna, 
                       function(e) root(njs(dist.dna(e, model = "TN93")), 1))
 
-plot(tre, show.tip = FALSE, edge.width = 2)
+plot(tre, show.tip = TRUE, edge.width = 2)
 title("NJ tree + bootstrap values")
-tiplabels(frame="none", pch=20, col=transp(num2col(annot$year, col.pal=myPal),.7), cex=3, fg="transparent")
+
+myPal <- colorRampPalette(c("red","yellow","green","blue"))
+
+tiplabels(frame = "none", pch = 20, cex = 3, 
+          col = transp(num2col(select.anno$Year, col.pal = myPal), 1.0), 
+          fg = "transparent")
 
 axisPhylo()
 temp <- pretty(1993:2008, 5)
-legend("topright", fill=transp(num2col(temp, col.pal=myPal),.7), leg=temp, ncol=2)
-nodelabels(myBoots, cex=.6)
+legend("topright", 
+       # fill = transp(num2col(temp, col.pal = myPal), .7), 
+       fill = 1, 
+       # leg = temp, 
+       ncol = 2)
+
+nodelabels(myBoots, bg = NULL, cex = .6)
 
 
 library(ggmsa)
