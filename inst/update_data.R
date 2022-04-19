@@ -321,7 +321,6 @@ ggmsa(all.fas,
   geom_seqlogo() +
   geom_msaBar()
 
-
 ### ------------------------------------------------------------------------ ###
 ### Step-14. Reture the primary working directory.
 
