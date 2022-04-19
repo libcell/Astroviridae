@@ -241,14 +241,12 @@ nodelabels(myBoots,
            cex = .8)
 
 ## 
+# Taking protein sequences from ggmsa as example, to illustrate visualization.
 
 library(ggmsa)
 
-all.fas <- msaConvert(align.seq, 
-                      type = "ape::DNAbin")
-
-all.fasta <- system.file("inst/extdata", 
-                         "Astroviridae_genome.fas", 
+all.fas <- system.file("inst/extdata", 
+                         "aligned_genomes.fas", 
                          package = "Astroviridae")
 
 all.fas <- "C:/Users/libo/Documents/genome_data/aligned_genomes.fas"
@@ -261,14 +259,4 @@ ggmsa(all.fas,
   geom_seqlogo() + 
   geom_msaBar()
 
-# Taking protein sequences from ggmsa as example, to illustrate visualization.
-protein_sequences <- system.file("extdata", 
-                                 "sample.fasta", 
-                                 package = "ggmsa")
-ggmsa(protein_sequences, 
-      start = 221, 
-      end = 280, 
-      char_width = 0.5, 
-      seq_name = T) + 
-  geom_seqlogo() + 
-  geom_msaBar()
+
