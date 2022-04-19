@@ -14,32 +14,48 @@
 ### ****************************************************************************
 
 ### ------------------------------------------------------------------------ ###
-### Step-01. Reading the score stored in *.xlsx file in R environment
+### Step-01. Install all R packages in this project.
 
-## (1) Download the newest version statistics file from NCBI website.
+
+### ------------------------------------------------------------------------ ###
+### Step-02. Download the newest version statistics file from NCBI website.
+
 # https://.../datasets/genomes/?taxon=39733&utm_source=genome&utm_medium=referral
 # save as "Statistics.tsv"
 # And meanwhile, downloading the newest version of ncbi_dataset.zip
 
-## (2) Set up the working directory.
-user <- "libo"
-wkdir <- getwd()
 
-## (3) Firstly, update the object - Statistics.rds
+### ------------------------------------------------------------------------ ###
+### Step-03. Set up the working directory.
+
+wkdir <- getwd()
+user <- strsplit(x = wkdir,
+                 split = "/")[[1]][3]
+
+
+### ------------------------------------------------------------------------ ###
+### Step-04. Firstly, update the object - Statistics.rds
+
 library(readr)
-stats_path <- paste("C:/Users", user, "Downloads/Statistics.tsv", sep = "/")
+stats_path <- paste("C:/Users",
+                    user,
+                    "Downloads",
+                    "Statistics.tsv",
+                    sep = "/")
+
 stats <- read_tsv(stats_path)
 stats <- as.data.frame(stats)
-# library(DT)
-# datatable(stats)
+
 seq.refseq <- stats[grep("NCBI RefSeq", stats$`Annotation Name`), ]
 seq.speseq <- stats[-grep("NCBI RefSeq", stats$`Annotation Name`), ]
+
 # saveRDS(stats, file = "Statistics.rds")
 
 ## (4) Exploring the information for Astroviridae.
 
 # - genome size distribution.
 asv.len <- stats$`Assembly Stats Total Sequence Length`
+
 hist(asv.len, breaks = 10,
      main = "Distribution of Genome Size for Astroviridae")
 
@@ -50,6 +66,9 @@ time.line <- as.numeric(time.line)
 
 stats$Year <- time.line # added the year into the stats object.
 
+stats$Year <- time.line # added the year into the stats object.
+
+
 tl.x <- seq(min(time.line), max(time.line), by = 1)
 tl.y <- rep(NA, times = length(tl.x))
 
@@ -59,6 +78,7 @@ for (i in 1:length(tl.y)) {
 }
 
 plot(tl.x, tl.y, type = "h", lwd = 4)
+
 pie(sort(table(time.line), decreasing = TRUE),
     init.angle = 0,
     clockwise = TRUE,
@@ -75,7 +95,11 @@ if (!dir.exists("genome_data"))
 setwd("genome_data")
 
 if (!dir.exists("ncbi_dataset")) {
-  file.copy("C:/Users/libo//Downloads/ncbi_dataset.zip", ".")
+  file_path <- paste("C:/Users",
+                     user,
+                     "Downloads/ncbi_dataset.zip",
+                     sep = "/")
+  file.copy(file_path, ".")
   unzip("ncbi_dataset.zip")
 }
 
@@ -85,6 +109,7 @@ if (!dir.exists("ncbi_dataset")) {
 ## (6) Re-update the statistics.rds after obtaning the names for all viruses.
 #
 # - Read the genome sequences of all viruses, and generate a list object in R.
+
 
 library(Biostrings)
 
@@ -139,8 +164,9 @@ file.copy("Statistics.RData", "D:/00-GitHub/Astroviridae/data")
 
 ## (7) Save the all genome sequences as one file in fasta format.
 
+
 writeXStringSet(all.seq,
-                "Astroviridae_genomes.fas",
+                "Astroviridae_genome.fas",
                 append = FALSE,
                 compress = FALSE,
                 compression_level = NA,
@@ -248,8 +274,6 @@ library(ggmsa)
 all.fas <- system.file("inst/extdata",
                          "aligned_genomes.fas",
                          package = "Astroviridae")
-
-all.fas <- "C:/Users/libo/Documents/genome_data/aligned_genomes.fas"
 
 ggmsa(all.fas,
       start = 2221,
