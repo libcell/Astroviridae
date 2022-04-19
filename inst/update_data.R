@@ -303,12 +303,13 @@ nodelabels(myBoots,
            col = "red",
            cex = .8)
 
-##
-# Taking protein sequences from ggmsa as example, to illustrate visualization.
+
+### ------------------------------------------------------------------------ ###
+### Step-13. Read genome sequences from Astroviridae, to illustrate visualization.
 
 library(ggmsa)
 
-all.fas <- system.file("inst/extdata",
+all.fas <- system.file("extdata",
                          "aligned_genomes.fas",
                          package = "Astroviridae")
 
@@ -320,4 +321,7 @@ ggmsa(all.fas,
   geom_seqlogo() +
   geom_msaBar()
 
+
+### End of Here!
+### ------------------------------------------------------------------------ ###
 
