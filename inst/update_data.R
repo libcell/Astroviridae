@@ -17,8 +17,13 @@
 ### Step-01. Reading the score stored in *.xlsx file in R environment
 
 ## (0) Install all R packages used in this project.
-# BiocManager::install("Biostrings")
-# BiocManager::install("msa")
+
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("Biostrings")
+BiocManager::install("msa")
+BiocManager::install("ggmsa")
 
 ## (1) Download the newest version statistics file from NCBI website.
 # i) Enter https://www.ncbi.nlm.nih.gov/genome/?term=Astroviridae;
@@ -94,7 +99,13 @@ if (!dir.exists("genome_data"))
 setwd("genome_data")
 
 if (!dir.exists("ncbi_dataset")) {
-  file.copy("C:/Users/libo//Downloads/ncbi_dataset.zip", ".")
+
+  file_path <- paste("C:/Users",
+                      user,
+                     "Downloads",
+                     "ncbi_dataset.zip",
+                      sep = "/")
+  file.copy(file_path, ".")
   unzip("ncbi_dataset.zip")
 }
 
