@@ -184,35 +184,41 @@ save(stats, file = "Statistics.RData")
 
 file.copy("Statistics.RData", "D:/00-GitHub/Astroviridae/data")
 
-## (7) Save the all genome sequences as one file in fasta format.
 
+### ------------------------------------------------------------------------ ###
+### Step-08. Save the all genome sequences as one file in fasta format.
 
 writeXStringSet(all.seq,
-                "Astroviridae_genome.fas",
+                "Astroviridae_genomes.fas",
                 append = FALSE,
                 compress = FALSE,
                 compression_level = NA,
                 format = "fasta")
 
-file.copy("Astroviridae_genomes.fas", "D:/00-GitHub/Astroviridae/inst/extdata/")
+file.copy("Astroviridae_genomes.fas",
+          "D:/00-GitHub/Astroviridae/inst/extdata/")
 
-# (8) Choose the viruses for constructing the dendrogram.
+
+### ------------------------------------------------------------------------ ###
+### Step-09. Choose the viruses for constructing the dendrogram.
 # Update the names of all viruses, i. e., the future labels of evolutionary tree.
+
+# - 1) Re-name all sequences with their identifiers (or Organism Name).
 
 # names(all.seq) <- stats$`Organism Name`
 names(all.seq) <- stats$Identifier
 
-### Pick sequences.
+# - 2) Pick sequences.
 
 select.seq <- all.seq[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes"]
-# select.anno <- stats[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes", ]
+
 # rownames(select.anno) <- 1:nrow(select.anno)
 
-library(msa)
+# - 3) Implement Multiple sequence alignment with msa package.
 
+library(msa)
 align.seq <- msa(select.seq,
                  method = "ClustalW")
-
 align.seq
 
 #. print(align.seq, show = "complete")
