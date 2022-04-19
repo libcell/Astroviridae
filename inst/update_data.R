@@ -16,6 +16,13 @@
 ### ------------------------------------------------------------------------ ###
 ### Step-01. Install all R packages in this project.
 
+if (!require("BiocManager"))
+  install.packages("BiocManager")
+
+BiocManager::install("BioStrings")
+BiocManager::install("msa")
+BiocManager::install("ggmsa")
+
 
 ### ------------------------------------------------------------------------ ###
 ### Step-02. Download the newest version statistics file from NCBI website.
@@ -37,11 +44,12 @@ user <- strsplit(x = wkdir,
 ### Step-04. Firstly, update the object - Statistics.rds
 
 library(readr)
-stats_path <- paste("C:/Users",
-                    user,
-                    "Downloads",
-                    "Statistics.tsv",
-                    sep = "/")
+
+stats_path <- file.path("C:",
+                        "Users",
+                        user,
+                        "Downloads",
+                        "Statistics.tsv")
 
 stats <- read_tsv(stats_path)
 stats <- as.data.frame(stats)
@@ -49,9 +57,8 @@ stats <- as.data.frame(stats)
 seq.refseq <- stats[grep("NCBI RefSeq", stats$`Annotation Name`), ]
 seq.speseq <- stats[-grep("NCBI RefSeq", stats$`Annotation Name`), ]
 
-# saveRDS(stats, file = "Statistics.rds")
-
-## (4) Exploring the information for Astroviridae.
+### ------------------------------------------------------------------------ ###
+### Step-05. Exploring the information for Astroviridae.
 
 # - genome size distribution.
 asv.len <- stats$`Assembly Stats Total Sequence Length`
