@@ -22,6 +22,7 @@ if (!require("BiocManager"))
 BiocManager::install("BioStrings")
 BiocManager::install("msa")
 BiocManager::install("ggmsa")
+BiocManager::install("adegenet")
 
 
 ### ------------------------------------------------------------------------ ###
@@ -219,19 +220,23 @@ select.seq <- all.seq[stats$is.FullGnm == "Yes" & stats$is.RefSeq == "Yes"]
 library(msa)
 align.seq <- msa(select.seq,
                  method = "ClustalW")
-align.seq
+print(align.seq)
+print(align.seq, show = "complete")
 
-#. print(align.seq, show = "complete")
 
-## (9) Extract the specific reqion, from sequences aligned or not aligned.
+### ------------------------------------------------------------------------ ###
+### Step-10. Extract the specific reqion, from sequences aligned or not aligned.
 
 subseq(all.seq, start = 5000, end  = 5100)
 subseq(all.seq[[1]], start = 1, end = 50)
 
-msaConsensusSequence(align.seq)
+consv.motif <- msaConsensusSequence(align.seq)
+
 # saveRDS(all.seq, file = "AsvDB.rds")
 
-## (10) Convert the aligned genome to fasta format and save it as a file.
+
+### ------------------------------------------------------------------------ ###
+### Step-11. Convert the aligned genome to fasta format and save it as a file.
 
 library(bios2mds)
 
@@ -241,9 +246,13 @@ export.fasta(DNA,
              outfile = "aligned_genomes.fas",
              ncol = 60, open = "w")
 
-file.copy("aligned_genomes.fas", "D:/00-GitHub/Astroviridae/inst/extdata/")
+file.copy("aligned_genomes.fas",
+          "D:/00-GitHub/Astroviridae/inst/extdata/",
+          overwrite = TRUE)
 
-## (11) Read the aligned genome sequences and construct the evolution tree.
+
+### ------------------------------------------------------------------------ ###
+### Step-12. Read the aligned genome sequences and construct the evolution tree.
 
 library(adegenet)
 dna <- fasta2DNAbin(file = "aligned_genomes.fas")
