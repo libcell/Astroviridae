@@ -187,6 +187,8 @@ export.fasta(DNA,
              outfile = "aligned_genomes.fas", 
              ncol = 60, open = "w")
 
+file.copy("aligned_genomes.fas", "D:/00-GitHub/Astroviridae/inst/extdata/")
+
 ## (11) Read the aligned genome sequences and construct the evolution tree. 
 
 library(adegenet)
@@ -210,6 +212,8 @@ tre
 plot(tre, cex = 0.6)
 title("A Simple NJ Tree")
 
+# Construct the dendrogram based on bootstrapping technique. 
+
 myBoots <- boot.phylo(tre, 
                       dna, 
                       function(e) root(njs(dist.dna(e, model = "TN93")), 1))
@@ -230,11 +234,34 @@ legend("topright",
        leg = temp, 
        ncol = 2)
 
-nodelabels(myBoots, bg = NULL, frame = "none", col = "red", cex = .8)
+nodelabels(myBoots, 
+           bg = NULL, 
+           frame = "none", 
+           col = "red", 
+           cex = .8)
 
-
+## 
 
 library(ggmsa)
+
+all.fas <- msaConvert(align.seq, 
+                      type = "ape::DNAbin")
+
+all.fasta <- system.file("inst/extdata", 
+                         "Astroviridae_genome.fas", 
+                         package = "Astroviridae")
+
+all.fas <- "C:/Users/libo/Documents/genome_data/aligned_genomes.fas"
+
+ggmsa(all.fas, 
+      start = 2221, 
+      end = 2280, 
+      char_width = 0.5, 
+      seq_name = T) + 
+  geom_seqlogo() + 
+  geom_msaBar()
+
+# Taking protein sequences from ggmsa as example, to illustrate visualization.
 protein_sequences <- system.file("extdata", 
                                  "sample.fasta", 
                                  package = "ggmsa")
@@ -245,16 +272,3 @@ ggmsa(protein_sequences,
       seq_name = T) + 
   geom_seqlogo() + 
   geom_msaBar()
-
-all.fas <- msaConvert(align.seq, 
-                      type = "ape::DNAbin")
-
-ggmsa(all.fas, 
-      start = 221, 
-      end = 280, 
-      char_width = 0.5, 
-      seq_name = T) + 
-  geom_seqlogo() + 
-  geom_msaBar()
-
-
