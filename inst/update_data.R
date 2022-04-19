@@ -27,6 +27,8 @@ BiocManager::install("ggmsa")
 ### ------------------------------------------------------------------------ ###
 ### Step-02. Download the newest version statistics file from NCBI website.
 
+# Enter https://www.ncbi.nlm.nih.gov/genome/?term=Astroviridae
+# Click "Genomes", and get into the following web link.
 # https://.../datasets/genomes/?taxon=39733&utm_source=genome&utm_medium=referral
 # save as "Statistics.tsv"
 # And meanwhile, downloading the newest version of ncbi_dataset.zip
@@ -63,7 +65,9 @@ seq.speseq <- stats[-grep("NCBI RefSeq", stats$`Annotation Name`), ]
 # - genome size distribution.
 asv.len <- stats$`Assembly Stats Total Sequence Length`
 
-hist(asv.len, breaks = 10,
+hist(asv.len,
+     breaks = 10,
+     col = terrain.colors(15),
      main = "Distribution of Genome Size for Astroviridae")
 
 # - The timeline on discovery of viruses from Astroviridae.
@@ -84,14 +88,23 @@ for (i in 1:length(tl.y)) {
   tl.y[i] <- count
 }
 
-plot(tl.x, tl.y, type = "h", lwd = 4)
+plot(tl.x,
+     tl.y,
+     xlab = "Year",
+     ylab = "Genome Count, in Astroviridae",
+     type = "h",
+     col = terrain.colors(length(tl.x)),
+     lwd = 4)
 
-pie(sort(table(time.line), decreasing = TRUE),
+pie(sort(table(time.line),
+         decreasing = TRUE),
     init.angle = 0,
     clockwise = TRUE,
     srt = 0)
 
-## (5) Firstly, update the genome sequence files.
+
+### ------------------------------------------------------------------------ ###
+### Step-06. Firstly, update the genome sequence files.
 
 library(utils)
 
@@ -102,21 +115,23 @@ if (!dir.exists("genome_data"))
 setwd("genome_data")
 
 if (!dir.exists("ncbi_dataset")) {
-  file_path <- paste("C:/Users",
-                     user,
-                     "Downloads/ncbi_dataset.zip",
-                     sep = "/")
-  file.copy(file_path, ".")
+
+  dtst_path <- file.path("C:",
+                         "Users",
+                         user,
+                         "Downloads",
+                         "ncbi_dataset.zip")
+
+
+  file.copy(dtst_path, ".")
   unzip("ncbi_dataset.zip")
 }
 
-# BiocManager::install("Biostrings")
-# BiocManager::install("msa")
 
-## (6) Re-update the statistics.rds after obtaning the names for all viruses.
+### ------------------------------------------------------------------------ ###
+### Step-07. Re-update the statistics.rds after obtaning the names for all viruses.
 #
-# - Read the genome sequences of all viruses, and generate a list object in R.
-
+# - 1) Read the genome sequences of all viruses, and generate a list object in R.
 
 library(Biostrings)
 
@@ -128,7 +143,9 @@ p <- 0
 
 for (i in AsV.id) {
   p <- p + 1
-  file.path <- paste("./ncbi_dataset/data", i, sep = "/")
+  file.path <- paste("./ncbi_dataset/data",
+                     i,
+                     sep = "/")
   setwd(file.path)
   fas <- readDNAStringSet(dir()[1])
   setwd(".."); setwd(".."); setwd("..")
@@ -137,7 +154,7 @@ for (i in AsV.id) {
 
 all.seq <- do.call(c, dna.list)
 
-# - Add two new features on all genome sequences in statistics.rds.
+# - 2) Add two new features on all genome sequences in statistics.rds.
 
 AsV.anno <- names(all.seq)
 
@@ -161,9 +178,7 @@ names(res) <- NULL
 
 stats$Identifier <- res
 
-DT::datatable(stats)
-
-# saveRDS(stats, file = "Statistics.rds")
+# DT::datatable(stats)
 
 save(stats, file = "Statistics.RData")
 
