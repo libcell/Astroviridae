@@ -19,6 +19,8 @@
 if (!require("BiocManager"))
   install.packages("BiocManager")
 
+install.packages("readr")
+
 BiocManager::install("BioStrings")
 BiocManager::install("msa")
 BiocManager::install("ggmsa")
@@ -48,7 +50,6 @@ user <- strsplit(x = wkdir,
 ### Step-04. Firstly, update the object - Statistics.rds
 
 library(readr)
-
 stats_path <- file.path("C:",
                         "Users",
                         user,
@@ -78,9 +79,6 @@ time.line <- sapply(as.character(time.line), function(x) strsplit(x, "-")[[1]][1
 time.line <- as.numeric(time.line)
 
 stats$Year <- time.line # added the year into the stats object.
-
-stats$Year <- time.line # added the year into the stats object.
-
 
 tl.x <- seq(min(time.line), max(time.line), by = 1)
 tl.y <- rep(NA, times = length(tl.x))
@@ -184,7 +182,9 @@ stats$Identifier <- res
 
 save(stats, file = "Statistics.RData")
 
-file.copy("Statistics.RData", "D:/00-GitHub/Astroviridae/data")
+file.copy("Statistics.RData",
+          "D:/00-GitHub/Astroviridae/data",
+          overwrite = TRUE)
 
 
 ### ------------------------------------------------------------------------ ###
@@ -198,7 +198,8 @@ writeXStringSet(all.seq,
                 format = "fasta")
 
 file.copy("Astroviridae_genomes.fas",
-          "D:/00-GitHub/Astroviridae/inst/extdata/")
+          "D:/00-GitHub/Astroviridae/inst/extdata/",
+          overwrite = TRUE)
 
 
 ### ------------------------------------------------------------------------ ###
@@ -305,6 +306,18 @@ nodelabels(myBoots,
            cex = .8)
 
 
+out.id <- 1:2
+tre2 <- root(tre, out = out.id)
+tre2 <- ladderize(tre2)
+plot(tre2,
+     show.tip = TRUE,
+     edge.width = 2)
+tre.title <- paste("Rooted NJ tree",
+                   ", outgroup =",
+                   tre$tip.label[out.id],
+                   sep = " ")
+
+
 ### ------------------------------------------------------------------------ ###
 ### Step-13. Read genome sequences from Astroviridae, to illustrate visualization.
 
@@ -331,3 +344,41 @@ setwd(wkdir)
 ### ************************************************************************ ###
 ### End of Here!
 ### ************************************************************************ ###
+# method = average is used for UPGMA, members can be equal to NULL or a vector
+# with a length of size D
+
+D[is.na(D)] <- 3
+
+h_cluster <- hclust(D)
+
+plot(h_cluster, cex = 0.6)
+
+
+
+data(bird.orders)
+plot(root(bird.orders, 1))
+plot(root(bird.orders, 2))
+plot(root(bird.orders, 3))
+plot(root(bird.orders, 4))
+plot(root(bird.orders, 5))
+plot(root(bird.orders, 1:5))
+
+tr <- root(bird.orders, 1)
+is.rooted(bird.orders) # yes
+is.rooted(tr)          # no
+### This is because the tree has been unrooted first before rerooting.
+### You can delete the outgroup...
+is.rooted(drop.tip(tr, "Struthioniformes"))
+### ... or resolve the basal trichotomy in two ways:
+is.rooted(multi2di(tr))
+is.rooted(root(bird.orders, 1, r = TRUE))
+### To keep the basal trichotomy but forcing the tree as rooted:
+tr$root.edge <- 0
+is.rooted(tr)
+
+x <- setNames(rmtree(10, 10), LETTERS[1:10])
+is.rooted(x)
+
+
+
+
