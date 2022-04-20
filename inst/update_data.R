@@ -379,7 +379,6 @@ all.fas <- system.file("extdata",
                        package = "Astroviridae")
 
 
-
 align.plot <- ggmsa(all.fas,
                     start = 2201,
                     end = 2300,
@@ -388,18 +387,16 @@ align.plot <- ggmsa(all.fas,
   geom_seqlogo() +
   geom_msaBar()
 
-align.plot
+print(align.plot)
 
 ### ------------------------------------------------------------------------ ###
 ### Step-15. Back to the primary working directory.
 
 setwd(wkdir)
 
-### ************************************************************************ ###
-### End of Here!
-### ************************************************************************ ###
-# method = average is used for UPGMA, members can be equal to NULL or a vector
-# with a length of size D
+
+### ------------------------------------------------------------------------ ###
+### Step-16. Try to generate the UPGMA tree.
 
 D[is.na(D)] <- 3
 
@@ -407,29 +404,11 @@ h_cluster <- hclust(D)
 
 plot(h_cluster, cex = 0.6)
 
+### ************************************************************************ ###
+### End of Here!
+### ************************************************************************ ###
+# method = average is used for UPGMA, members can be equal to NULL or a vector
+# with a length of size D
 
 
-data(bird.orders)
-plot(root(bird.orders, 1))
-plot(root(bird.orders, 2))
-plot(root(bird.orders, 3))
-plot(root(bird.orders, 4))
-plot(root(bird.orders, 5))
-plot(root(bird.orders, 1:5))
-
-tr <- root(bird.orders, 1)
-is.rooted(bird.orders) # yes
-is.rooted(tr)          # no
-### This is because the tree has been unrooted first before rerooting.
-### You can delete the outgroup...
-is.rooted(drop.tip(tr, "Struthioniformes"))
-### ... or resolve the basal trichotomy in two ways:
-is.rooted(multi2di(tr))
-is.rooted(root(bird.orders, 1, r = TRUE))
-### To keep the basal trichotomy but forcing the tree as rooted:
-tr$root.edge <- 0
-is.rooted(tr)
-
-x <- setNames(rmtree(10, 10), LETTERS[1:10])
-is.rooted(x)
 
