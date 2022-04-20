@@ -197,7 +197,8 @@ stats$Identifier <- res
 
 # DT::datatable(stats)
 
-save(stats, file = "Statistics.RData")
+save(stats,
+     file = "Statistics.RData")
 
 file.copy("Statistics.RData",
           "D:/00-GitHub/Astroviridae/data",
