@@ -18,15 +18,20 @@
 
 if (!require("BiocManager"))
   install.packages("BiocManager")
-
-install.packages("readr")
-
-BiocManager::install("BioStrings")
-BiocManager::install("msa")
-BiocManager::install("ggmsa")
-BiocManager::install("adegenet")
-BiocManager::install("bios2mds")
-BiocManager::install("ape")
+if (!require("readr"))
+  install.packages("readr")
+if (!require("BioStrings"))
+  BiocManager::install("BioStrings")
+if (!require("msa"))
+  BiocManager::install("msa")
+if (!require("ggmsa"))
+  BiocManager::install("ggmsa")
+if (!require("adegenet"))
+  BiocManager::install("adegenet")
+if (!require("bios2mds"))
+  BiocManager::install("bios2mds")
+if (!require("ape"))
+  BiocManager::install("ape")
 
 ### ------------------------------------------------------------------------ ###
 ### Step-02. Download the newest version statistics file from NCBI website.
