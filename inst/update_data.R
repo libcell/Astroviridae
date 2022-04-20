@@ -25,6 +25,8 @@ if (!require("readr"))
   install.packages("readr")
 if (!require("ape"))
   install.packages("ape")
+if (!require("stringr"))
+  install.packages("stringr")
 
 if (!require("Biostrings"))
   BiocManager::install("Biostrings")
@@ -349,18 +351,23 @@ nodelabels(myBoots,
            col = "red",
            cex = .8)
 
+# Choose single or multiple tips as the out group of evolution tree.
 
-out.id <- 1:2
+selected_tips <- c("NC_040647.1")
+
+out.id <- match(selected_tips, tre$tip.label)
+
 tre2 <- root(tre, out = out.id)
+
 tre2 <- ladderize(tre2)
 plot(tre2,
      show.tip = TRUE,
      edge.width = 2)
 tre.title <- paste("Rooted NJ tree",
                    ", outgroup =",
-                   tre$tip.label[out.id],
+                   stringr::str_c(selected_tips, sep = "/"),
                    sep = " ")
-
+title(tre.title)
 
 ### ------------------------------------------------------------------------ ###
 ### Step-14. Read genome sequences from Astroviridae, to illustrate visualization.
@@ -368,19 +375,19 @@ tre.title <- paste("Rooted NJ tree",
 library(ggmsa)
 
 all.fas <- system.file("extdata",
-                         "aligned_genomes.fas",
-                         package = "Astroviridae")
+                       "aligned_genomes.fas",
+                       package = "Astroviridae")
 
 ggmsa(all.fas,
-      start = 2221,
-      end = 2280,
+      start = 2201,
+      end = 2300,
       char_width = 0.5,
       seq_name = T) +
   geom_seqlogo() +
   geom_msaBar()
 
 ### ------------------------------------------------------------------------ ###
-### Step-15. Reture the primary working directory.
+### Step-15. Back to the primary working directory.
 
 setwd(wkdir)
 
