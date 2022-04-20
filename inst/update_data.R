@@ -378,13 +378,17 @@ all.fas <- system.file("extdata",
                        "aligned_genomes.fas",
                        package = "Astroviridae")
 
-ggmsa(all.fas,
-      start = 2201,
-      end = 2300,
-      char_width = 0.5,
-      seq_name = T) +
+
+
+align.plot <- ggmsa(all.fas,
+                    start = 2201,
+                    end = 2300,
+                    char_width = 0.5,
+                    seq_name = T) +
   geom_seqlogo() +
   geom_msaBar()
+
+align.plot
 
 ### ------------------------------------------------------------------------ ###
 ### Step-15. Back to the primary working directory.
