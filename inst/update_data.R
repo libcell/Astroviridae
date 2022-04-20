@@ -250,8 +250,7 @@ subseq(all.seq, start = 5000, end  = 5100)
 subseq(all.seq[[1]], start = 1, end = 50)
 
 consv.motif <- msaConsensusSequence(align.seq)
-
-# saveRDS(all.seq, file = "AsvDB.rds")
+consv.motif
 
 
 ### ------------------------------------------------------------------------ ###
@@ -263,7 +262,8 @@ DNA <- msaConvert(align.seq,
                   type = "bios2mds::align")
 export.fasta(DNA,
              outfile = "aligned_genomes.fas",
-             ncol = 60, open = "w")
+             ncol = 60,
+             open = "w")
 
 file.copy("aligned_genomes.fas",
           "D:/00-GitHub/Astroviridae/inst/extdata/",
@@ -275,7 +275,15 @@ file.copy("aligned_genomes.fas",
 
 library(adegenet)
 dna <- fasta2DNAbin(file = "aligned_genomes.fas")
-anno <- stats[match(rownames(dna), stats$Identifier), ]
+anno <- stats[match(rownames(dna),
+                    stats$Identifier), ]
+rownames(anno) <- 1:nrow(anno)
+dna_labels <- attributes(dna)$dimnames[[1]]
+
+# Determine whether the two are the same.
+
+all(dna_labels == anno$Identifier)
+
 
 library(ape)
 D <- dist.dna(dna, model = "TN93")
