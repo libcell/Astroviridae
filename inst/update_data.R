@@ -271,8 +271,9 @@ file.copy("aligned_genomes.fas",
 
 
 ### ------------------------------------------------------------------------ ###
-### Step-12. Read the aligned genome sequences and construct the evolution tree.
+### Step-12. Read the aligned genome sequences.
 
+# - 1) Read the aligned sequences.
 library(adegenet)
 dna <- fasta2DNAbin(file = "aligned_genomes.fas")
 anno <- stats[match(rownames(dna),
@@ -280,10 +281,12 @@ anno <- stats[match(rownames(dna),
 rownames(anno) <- 1:nrow(anno)
 dna_labels <- attributes(dna)$dimnames[[1]]
 
-# Determine whether the two are the same.
-
+# - 2) Determine whether the two are the same.
 all(dna_labels == anno$Identifier)
 
+
+### ------------------------------------------------------------------------ ###
+### Step-13. Construct the evolution tree.
 
 library(ape)
 D <- dist.dna(dna, model = "TN93")
@@ -344,7 +347,7 @@ tre.title <- paste("Rooted NJ tree",
 
 
 ### ------------------------------------------------------------------------ ###
-### Step-13. Read genome sequences from Astroviridae, to illustrate visualization.
+### Step-14. Read genome sequences from Astroviridae, to illustrate visualization.
 
 library(ggmsa)
 
