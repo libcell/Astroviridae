@@ -1,6 +1,6 @@
 
 ################################################################################
-#    &&&....&&&    % Project: Data analysis and mining of student score        #
+#    &&&....&&&    % Project: Update data sets used in Astroviridae package    #
 #  &&&&&&..&&&&&&  % Author: Bo Li, Xiaoxi Zhang, Xiner Nie                    #
 #  &&&&&&&&&&&&&&  % Date: Apr. 15th, 2022                                     #
 #   &&&&&&&&&&&&   %                                                           #
@@ -23,7 +23,8 @@ BiocManager::install("BioStrings")
 BiocManager::install("msa")
 BiocManager::install("ggmsa")
 BiocManager::install("adegenet")
-
+BiocManager::install("bios2mds")
+BiocManager::install("ape")
 
 ### ------------------------------------------------------------------------ ###
 ### Step-02. Download the newest version statistics file from NCBI website.
