@@ -30,13 +30,16 @@ if (!require("Biostrings"))
   BiocManager::install("Biostrings")
 if (!require("msa"))
   BiocManager::install("msa")
+
+if (!requireNamespace("devtools", quietly=TRUE))
+  install.packages("devtools")
 if (!require("ggmsa"))
-  BiocManager::install("ggmsa")
+  devtools::install_github("YuLab-SMU/ggmsa")
+
 if (!require("adegenet"))
   BiocManager::install("adegenet")
 if (!require("bios2mds"))
   BiocManager::install("bios2mds")
-
 
 ### ------------------------------------------------------------------------ ###
 ### Step-02. Download the newest version statistics file from NCBI website.
