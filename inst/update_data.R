@@ -290,7 +290,7 @@ all(dna_labels == anno$Identifier)
 
 library(ape)
 D <- dist.dna(dna, model = "TN93")
-length(D) #number of pairwise distances, computed as n(n-1)/2
+length(D) # number of pairwise distances, computed as n(n-1)/2
 temp <- as.data.frame(as.matrix(D))
 DT::datatable(temp)
 temp[is.na(temp)] <- max(temp, na.rm = TRUE) + 1
@@ -309,21 +309,37 @@ title("A Simple NJ Tree")
 
 myBoots <- boot.phylo(tre,
                       dna,
-                      function(e) root(njs(dist.dna(e, model = "TN93")), 1))
+                      function(e) {
+                        root(njs(dist.dna(e,
+                                          model = "TN93")),
+                             outgroup = 1)
+                        })
 
-plot(tre, show.tip = TRUE, edge.width = 2)
+plot(tre,
+     show.tip = TRUE,
+     edge.width = 2)
 title("NJ tree + bootstrap values")
 
-myPal <- colorRampPalette(c("red","yellow","green","blue"))
+myPal <- colorRampPalette(c("red",
+                            "yellow",
+                            "green",
+                            "blue"))
 
-tiplabels(frame = "none", pch = 20, cex = 3,
-          col = transp(num2col(anno$Year, col.pal = myPal), 1.0),
+tiplabels(frame = "none",
+          pch = 20,
+          cex = 3,
+          col = transp(num2col(anno$Year,
+                               col.pal = myPal),
+                       1.0),
           fg = "transparent")
 
 axisPhylo()
-temp <- pretty(min(anno$Year):max(anno$Year), 10)
+temp <- pretty(min(anno$Year):max(anno$Year),
+               10)
 legend("topright",
-       fill = transp(num2col(temp, col.pal = myPal), .7),
+       fill = transp(num2col(temp,
+                             col.pal = myPal),
+                     .7),
        leg = temp,
        ncol = 2)
 
@@ -364,7 +380,7 @@ ggmsa(all.fas,
   geom_msaBar()
 
 ### ------------------------------------------------------------------------ ###
-### Step-14. Reture the primary working directory.
+### Step-15. Reture the primary working directory.
 
 setwd(wkdir)
 
@@ -406,7 +422,4 @@ is.rooted(tr)
 
 x <- setNames(rmtree(10, 10), LETTERS[1:10])
 is.rooted(x)
-
-
-
 
