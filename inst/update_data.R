@@ -204,7 +204,6 @@ file.copy("Statistics.RData",
           "D:/00-GitHub/Astroviridae/data",
           overwrite = TRUE)
 
-
 ### ------------------------------------------------------------------------ ###
 ### Step-08. Save the all genome sequences as one file in fasta format.
 
