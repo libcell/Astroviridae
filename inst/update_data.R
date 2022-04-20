@@ -16,10 +16,16 @@
 ### ------------------------------------------------------------------------ ###
 ### Step-01. Install all R packages in this project.
 
+#. pkg_cran <- c("BiocManager", "readr", "ape")
+#. pkg_bioc <- c("BioStrings", "msa", "ggmsa", "adegenet", "bios2mds", )
+
 if (!require("BiocManager"))
   install.packages("BiocManager")
 if (!require("readr"))
   install.packages("readr")
+if (!require("ape"))
+  install.packages("ape")
+
 if (!require("BioStrings"))
   BiocManager::install("BioStrings")
 if (!require("msa"))
@@ -30,8 +36,6 @@ if (!require("adegenet"))
   BiocManager::install("adegenet")
 if (!require("bios2mds"))
   BiocManager::install("bios2mds")
-if (!require("ape"))
-  BiocManager::install("ape")
 
 
 ### ------------------------------------------------------------------------ ###
@@ -81,13 +85,17 @@ hist(asv.len,
 
 # - The timeline on discovery of viruses from Astroviridae.
 time.line <- stats$`Assembly Submission Date`
-time.line <- sapply(as.character(time.line), function(x) strsplit(x, "-")[[1]][1])
+time.line <- sapply(as.character(time.line),
+                    function(x) strsplit(x, "-")[[1]][1])
 time.line <- as.numeric(time.line)
 
 stats$Year <- time.line # added the year into the stats object.
 
-tl.x <- seq(min(time.line), max(time.line), by = 1)
-tl.y <- rep(NA, times = length(tl.x))
+tl.x <- seq(min(time.line),
+            max(time.line),
+            by = 1)
+tl.y <- rep(NA,
+            times = length(tl.x))
 
 for (i in 1:length(tl.y)) {
   count <- length(which(as.character(as.character(time.line)) == as.character(tl.x[i])))
