@@ -11,11 +11,9 @@ library(webchem)
 
 library(openxlsx)
 
-drug <- read.xlsx("D:/00-GitHub/Astroviridae/inst/names_for_scz_approved_drugs.xlsx", 1)
+drug <- read.xlsx("D:/00-GitHub/Astroviridae/inst/extdata/names_for_scz_approved_drugs.xlsx", 1)
 
 drug <- drug$Compound_Name[-38] # remove the drug with mixed compounds.
-
-op <- par(mfrow = c(2, 2))
 
 ## (3) obtain the sdf files for all compounds.
 
@@ -60,8 +58,6 @@ for (d in 1:length(drug)) {
   cmpd@ID[d] <- drug[d]
 
 }
-
-par(op)
 
 plot(cmpd)
 
