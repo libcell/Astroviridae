@@ -50,7 +50,7 @@ for (d in 1:length(drug)) {
                  match = "first")
   cid <- cid$cid[1]
 
-  Sys.sleep(3)
+  Sys.sleep(0.2)
 
   print(cid)
 
