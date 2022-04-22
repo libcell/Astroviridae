@@ -9,12 +9,6 @@
 
 library(webchem)
 
-# help(package = "webchem")
-
-#. drug <- c("convolamine",
-#.           "esculetin",
-#.           "tinidazole")
-
 drug <- read.csv("CID for approved Scz drugs.txt",
                  header = TRUE,
                  sep = "\t")
