@@ -9,13 +9,11 @@
 
 library(webchem)
 
-drug <- read.csv("CID for approved Scz drugs.txt",
-                 header = TRUE,
-                 sep = "\t")
+library(openxlsx)
 
-drug <- drug$Drug.name
+drug <- read.xlsx("D:/00-GitHub/Astroviridae/inst/names_for_scz_approved_drugs.xlsx", 1)
 
-
+drug <- drug$Compound_Name[-38] # remove the drug with mixed compounds.
 
 op <- par(mfrow = c(2, 2))
 
@@ -60,8 +58,6 @@ for (d in 1:length(drug)) {
   cmpd@SDF[d] <- sdfset@SDF
 
   cmpd@ID[d] <- drug[d]
-
-  # cid(cmpd) <- makeUnique(cid(cmpd))
 
 }
 
