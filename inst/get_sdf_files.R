@@ -1,21 +1,19 @@
 
 ## (1) install R packages.
 
-if (!require("BiocManager")) install.packages("BiocManager")
-
-BiocManager::install("webchem")
-
-BiocManager::install("ChemmineR")
+#. if (!require("BiocManager")) install.packages("BiocManager")
+#. BiocManager::install("webchem")
+#. BiocManager::install("ChemmineR")
 
 ## (2) get the CID of all compounds, taking convolamine as example.
 
 library(webchem)
 
-help(package = "webchem")
+# help(package = "webchem")
 
-drug <- c("convolamine",
-          "esculetin",
-          "tinidazole")
+#. drug <- c("convolamine",
+#.           "esculetin",
+#.           "tinidazole")
 
 drug <- read.csv("CID for approved Scz drugs.txt",
                  header = TRUE,
