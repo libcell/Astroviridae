@@ -48,7 +48,7 @@ if (!require("bios2mds"))
 
 # Enter https://www.ncbi.nlm.nih.gov/genome/?term=Astroviridae
 # Click "Genomes", and get into the following web link.
-# https://.../datasets/genomes/?taxon=39733&utm_source=genome&utm_medium=referral
+# https://www.ncbi.nlm.nih.gov/datasets/genomes/?taxon=39733&utm_source=genome&utm_medium=referral
 # save as "Statistics.tsv"
 # And meanwhile, downloading the newest version of ncbi_dataset.zip
 
